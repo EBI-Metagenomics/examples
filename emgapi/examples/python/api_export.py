@@ -13,7 +13,7 @@ from pandas import DataFrame
 from jsonapi_client import Session, Filter
 
 
-API_BASE = 'https://www.ebi.ac.uk/metagenomics/api/v0.2/'
+API_BASE = 'https://www.ebi.ac.uk/metagenomics/api/latest/'
 
 
 def main(args=None):
