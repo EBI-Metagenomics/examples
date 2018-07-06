@@ -9,11 +9,17 @@ library("rjsonapi")
 # create connection to the MGnify API
 conn <- jsonapi_connect("https://www.ebi.ac.uk", "metagenomics/api/v1")
 
-# fetch analyses results for the given Study accession
-analyses <- conn$route(paste("studies", "MGYS00001390" ,"analyses?page_size=100" , sep="/"))
+# fetch analyses results for the given Study accession for v2
+# MGYS00002421 (bacteria only) 
+# MGYS00002474 (mislabeled comment Archea & Bacteria),
+# MGYS00002371 (Archea & Bacteria),
+# MGYS00002421 MGYS00002394 MGYS00002441 MGYS00002421 	
+# MGYS00001811
+analyses <- conn$route(paste("studies", "MGYS00002474" ,"analyses" , sep="/"))
 
 # load all the accessions
 accessions = analyses$data$attributes$accession
+
 
 # check if the dataset already exists
 if (exists("access.df")){
@@ -22,7 +28,8 @@ if (exists("access.df")){
 
 # load and format each individual csv
 for (a in accessions) {
-  taxa <- conn$route(paste("analyses", a, "taxonomy", sep="/"))
+  
+  taxa <- conn$route(paste("analyses", a, "taxonomy", "ssu",  sep="/"))
   df = taxa$data$attributes
   relabs = as.numeric(df[,1])/sum(taxa$data$attributes$count)*100
   phy.counts = data.frame(relabs, df[,"hierarchy"][,"phylum"], stringsAsFactors = FALSE)
@@ -61,7 +68,7 @@ print(ggplot(access.df, aes(x=Accessions, y=as.numeric(Rel.Ab), fill=Phylum))
       + ylab("Relative abundance (%)")
       + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       + scale_fill_manual(values=c(phy.colors))
-      + theme(axis.title.y = element_text(size=14))
-      + theme(axis.text.y = element_text(size=12))
+      + theme(axis.title.y = element_text(size=10))
+      + theme(axis.text.y = element_text(size=10))
       + theme(axis.title.x = element_blank())
-      + theme(axis.text.x = element_text(size=12)))
+      + theme(axis.text.x = element_text(size=10)))
