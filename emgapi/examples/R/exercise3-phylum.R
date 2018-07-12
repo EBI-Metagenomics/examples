@@ -19,7 +19,8 @@ accession = "MGYS00002474"
 # MGYS00002371 (DRP000490) Porcupine Seabight 16S Ribosomal RNA
 # accession = "MGYS00002371"
 
-# MGYS00002441
+# MGYS00002441 EMG produced TPA metagenomics assembly of
+# the doi: 10.3389/fmicb.2016.00579
 # accession = "MGYS00002441"
 
 # MGYS00002394 (SRP051741) Subgingival plaque and peri-implant biofilm
@@ -49,9 +50,15 @@ if (exists("access.df")){
 # load and format each individual csv
 for (a in accessions) {
   
-  # taxa = conn$route(paste("analyses", a, "taxonomy", sep="/"))
-  taxa = conn$route(paste("analyses", a, "taxonomy", "ssu", sep="/"))
+  taxa = conn$route(paste("analyses", a, "taxonomy", sep="/"))
+  if (length(taxa$data) < 1) {
+    taxa = conn$route(paste("analyses", a, "taxonomy", "ssu", sep="/"))
+  }
 
+  if (length(taxa$data) < 1) {
+    break
+  }
+  
   df = taxa$data$attributes
   relabs = as.numeric(df[,1])/sum(df$count)*100
   phy.counts = data.frame(relabs, df[,"hierarchy"][,"phylum"], stringsAsFactors = FALSE)
@@ -87,6 +94,7 @@ phy.colors = c("#A3A3A3", "#FFED6F","#CCEBC5","#BC80BD","#D9D9D9","#FCCDE5",
 print(ggplot(access.df, aes(x=Accessions, y=as.numeric(Rel.Ab), fill=Phylum)) 
       + geom_bar(stat="identity", colour = "darkgrey", size = 0.3, width = 0.6, alpha=0.7)
       + theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
+      + ggtitle(accession)
       + ylab("Relative abundance (%)")
       + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       + scale_fill_manual(values=c(phy.colors))
