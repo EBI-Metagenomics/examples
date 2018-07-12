@@ -5,21 +5,41 @@ library("RColorBrewer")
 library("jsonlite")
 library("rjsonapi")
 
-
 # create connection to the MGnify API
 conn <- jsonapi_connect("https://www.ebi.ac.uk", "metagenomics/api/v1")
 
-# fetch analyses results for the given Study accession for v2
-# MGYS00002421 (bacteria only) 
-# MGYS00002474 (mislabeled comment Archea & Bacteria),
-# MGYS00002371 (Archea & Bacteria),
-# MGYS00002421 MGYS00002394 MGYS00002441 MGYS00002421 	
-# MGYS00001811
-analyses <- conn$route(paste("studies", "MGYS00002474" ,"analyses" , sep="/"))
+# MGYS00002474 (DRP001073) Metabolically active microbial communities
+# in marine sediment under high-CO2 and low-pH extremes
+accession = "MGYS00002474"
+
+# MGYS00002421 (ERP009568) Prokaryotic microbiota associated to the digestive
+# cavity of the jellyfish Cotylorhiza tuberculata
+# accession = "MGYS00002421"
+
+# MGYS00002371 (DRP000490) Porcupine Seabight 16S Ribosomal RNA
+# accession = "MGYS00002371"
+
+# MGYS00002441
+# accession = "MGYS00002441"
+
+# MGYS00002394 (SRP051741) Subgingival plaque and peri-implant biofilm
+# accession = "MGYS00002394"
+
+# MGYS00001211 (SRP076746) Human gut metagenome Metagenome
+# accession = "MGYS00001211"
+
+# MGYS00000601 (ERP013908) Assessment of Bacterial DNA Extraction Procedures for Metagenomic Sequencing Evaluated
+# on Different Environmental Matrices.
+# accession = "MGYS00000601"
+
+# fetch analysis results
+analyses <- conn$route(paste("studies", accession ,"analyses" , sep="/"))
 
 # load all the accessions
 accessions = analyses$data$attributes$accession
 
+# Select individual analyses, e.g. OSD
+# accessions = c( )
 
 # check if the dataset already exists
 if (exists("access.df")){
@@ -29,9 +49,11 @@ if (exists("access.df")){
 # load and format each individual csv
 for (a in accessions) {
   
-  taxa <- conn$route(paste("analyses", a, "taxonomy", "ssu",  sep="/"))
+  # taxa = conn$route(paste("analyses", a, "taxonomy", sep="/"))
+  taxa = conn$route(paste("analyses", a, "taxonomy", "ssu", sep="/"))
+
   df = taxa$data$attributes
-  relabs = as.numeric(df[,1])/sum(taxa$data$attributes$count)*100
+  relabs = as.numeric(df[,1])/sum(df$count)*100
   phy.counts = data.frame(relabs, df[,"hierarchy"][,"phylum"], stringsAsFactors = FALSE)
   colnames(phy.counts) = c("Rel.Ab", "Phylum")
   phy.merged = aggregate(Rel.Ab ~ Phylum, data=phy.counts, sum)
