@@ -1,32 +1,44 @@
 library("rjsonapi")
 
-# MGYS00000389 (ERP005831) Stable isotope probing/metagenomics of terrestrial dimethylsulfide degrading microorganisms
-accession = "MGYS00000389"
-
-# MGYS00000453 (ERP009004) Hydrocarbon Metagenomics Project
-# accession = "MGYS00000453"
-
-# MGYS00000601 (ERP013908) Assessment of Bacterial DNA Extraction Procedures for Metagenomic Sequencing Evaluated
-# on Different Environmental Matrices.
-# accession = "MGYS00000601"
-
-# MGYS00001984 (ERP104045) EMG produced TPA metagenomics assembly of the Canadian MetaMicrobiome Library Projects
-# (Canadian MetaMicrobiome) data set
-# accession = "MGYS00001984"
-
 # create connection to the MGnify API
 conn <- jsonapi_connect("https://www.ebi.ac.uk", "metagenomics/api/v1")
 
-# Fetch samples
-samples <- conn$route(paste0("studies/", accession, "/samples", "?page_size=250"))
+# declare samples variable
+if (exists("samples")){
+  rm(samples)
+}
+samples=data.frame()
 
-# select columns and combine data into one DataFrame
-df = cbind(
-  samples$data$attributes[,c("accession", "longitude", "latitude", "sample-name", "geo-loc-name")],
-  biome=samples$data$relationships$biome$data$id
-)
+# start from first page
+p = 1
+
+# repeat until last page
+repeat{
+  # fetch each page
+  sam <- conn$route(
+    paste0("biomes/root:Environmental:Aquatic/samples",
+           "?latitude_gte=70",
+           "&experiment-type=metagenomic",
+           # "&study_accession=MGYS00000462",  # OSD only
+           "&ordering=accession",
+           "&page=", p)
+    )
+  sdf = cbind(
+    sam$data$attributes[,c("accession", "sample-name", "longitude", "latitude", "geo-loc-name")],
+    study=sapply(sapply(sam$data$relationships$studies$data, `[[`, 2),`[[`, 1),
+    biome=sam$data$relationships$biome$data$id
+  )
+  # append to samples
+  samples = rbind(sdf, samples, stringsAsFactors=FALSE)
+  message("Retrieving page ", p)
+  
+  # check if next page exists
+  p = sam$meta$pagination$page + 1
+  if (p > sam$meta$pagination$pages) {
+    break
+  }
+  
+}
 
 # save to csv
-fname = paste0("~/", accession, "-exercise1.csv")
-write.csv(df, file=fname)
-
+write.csv(samples, file="~/exercise2.csv")

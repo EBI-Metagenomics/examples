@@ -34,7 +34,7 @@ accession = "MGYS00002474"
 # accession = "MGYS00000601"
 
 # fetch analysis results
-analyses <- conn$route(paste("studies", accession ,"analyses" , sep="/"))
+analyses <- conn$route(paste("studies", accession ,"analyses", sep="/"))
 
 # load all the accessions
 accessions = analyses$data$attributes$accession
