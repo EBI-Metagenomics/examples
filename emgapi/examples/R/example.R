@@ -27,6 +27,6 @@ df = cbind(
 )
 
 # save to csv
-fname = paste0("~/", accession, "-exercise1.csv")
+fname = paste0("~/", accession, "-example.csv")
 write.csv(df, file=fname)
 

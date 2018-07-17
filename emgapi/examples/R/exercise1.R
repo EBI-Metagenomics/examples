@@ -41,4 +41,4 @@ repeat{
 }
 
 # save to csv
-write.csv(samples, file="~/exercise2.csv")
+write.csv(samples, file="~/exercise1.csv")
