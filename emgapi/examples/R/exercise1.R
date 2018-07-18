@@ -1,3 +1,4 @@
+# load libraries, use install.packages(library) if not installed
 library("rjsonapi")
 
 # create connection to the MGnify API
@@ -15,14 +16,17 @@ p = 1
 # repeat until last page
 repeat{
   # fetch each page
+  # change biome: 'root:Environmental:Terrestrial:Soil'"
+  # change geolocation latitude_gte=-10&latitude_lte=10
+  # OSD onlyu study_accession=MGYS00000462
+
   sam <- conn$route(
-    paste0("biomes/root:Environmental:Aquatic/samples",
-           "?latitude_gte=70",
+    paste0("biomes/root:Environmental:Aquatic/samples", 
+           "?latitude_gte=70", 
            "&experiment-type=metagenomic",
-           # "&study_accession=MGYS00000462",  # OSD only
            "&ordering=accession",
            "&page=", p)
-    )
+  )
   sdf = cbind(
     sam$data$attributes[,c("accession", "sample-name", "longitude", "latitude", "geo-loc-name")],
     study=sapply(sapply(sam$data$relationships$studies$data, `[[`, 2),`[[`, 1),
