@@ -15,3 +15,29 @@ Please refer to [mgnify/README.md](mgnify/README.md)
 ### ENA
 
 Please refer to [ena/README.md](ena/README.md)
+
+Contributors
+============
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/olatarkowska"><img src="https://avatars3.githubusercontent.com/u/1065155?v=4" width="100px;" alt=""/><br /><sub><b>Ola Tarkowska</b></sub></a><br /><a href="https://github.com/EBI-Metagenomics/emg-toolkit/commits?author=olatarkowska" title="Code">💻</a><a href="https://github.com/EBI-Metagenomics/EMG-docs/commits/master?author=olatarkowska">📖</a></td>
+    <td align="center"><a href="https://github.com/mberacochea"><img src="https://avatars3.githubusercontent.com/u/1123897?v=4" width="100px;" alt=""/><br /><sub><b>Martin Beracochea</b></sub></a><br /><a href="https://github.com/EBI-Metagenomics/emg-toolkit/commits?author=mberacochea" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+Contact
+=======
+
+If the documentation do not answer your questions, please [contact us](https://www.ebi.ac.uk/support/metagenomics).
