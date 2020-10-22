@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright 2018 EMBL - European Bioinformatics Institute
+# Copyright 2020 EMBL - European Bioinformatics Institute
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,14 +19,7 @@ import xmltodict
 import json
 from pandas import DataFrame
 
-"""
-virtualenv ena_metadata
-source ena_metadata/bin/activate
-(ena_metadata) $ pip install xmltodict requests
-"""
-
 study_accessions = ['ERP021896',]
-
 
 for study in study_accessions:
     print(study)
