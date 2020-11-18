@@ -6,7 +6,6 @@ A few examples on how to utilize MGnify API.
 
 The examples are stored in the `src` folder. They include jupyter notebooks, R and python scripts.
 
-
 ## Exercies
 
 ## Run in docker
