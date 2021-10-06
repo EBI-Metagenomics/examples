@@ -4,6 +4,15 @@ The MGnify REST API [https://www.ebi.ac.uk/metagenomics/api/latest/](https://www
 
 We have utilized an interactive documentation framework ([Swagger UI](https://swagger.io/tools/swagger-ui/)) to visualize and simplify interaction with the API’s resources via an HTML interface. Detailed explanations of the purpose of all resources, along with many examples, are provided to guide end-users. Documentation on how to use the endpoints is available at [https://www.ebi.ac.uk/metagenomics/api/docs/](https://www.ebi.ac.uk/metagenomics/api/docs/).
 
+We also have [general documentation for the MGnify resource](https://emg-docs.readthedocs.io) as a whole.
+
+## Quick start
+### Online examples in RStudio, for users of [R](https://www.r-project.org) 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/EBI-metagenomics/examples/binder?urlpath=rstudio)
+
+### Online examples in Jupyter, for users of [Python](https://www.python.org)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/EBI-metagenomics/examples/binder)
+
 ## Repo structure
 
 This repo contains MGnify API examples and [ENA](https://www.ebi.ac.uk/ena) examples. 

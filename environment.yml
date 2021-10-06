@@ -1,0 +1,10 @@
+name: mgnify-examples
+channels:
+  - conda-forge
+dependencies:
+  - numpy
+  - matplotlib
+  - pandas
+  - jsonapi-client
+  - r-base=3.6
+  - r-tidyverse
